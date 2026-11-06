@@ -1,0 +1,112 @@
+apiVersion: appthrust.io/v1alpha1
+kind: ApplicationStackDefinition
+metadata:
+  name: knowledge
+spec:
+  access:
+    accessKeys:
+      audience: knowledge
+      audienceEnv: KNOWLEDGE_ACCESS_AUDIENCE
+      defaultConnectionScopes:
+      - search
+      - documents:read
+      defaultTTL: 720h0m0s
+      keyPrefix: knowl
+      maxTTL: 8760h0m0s
+      scopes:
+      - description: POST /api/knowledge/v1/search and /answer
+        name: search
+      - description: Read collections and documents
+        name: documents:read
+      - description: Create and delete documents and ingestion jobs
+        name: documents:write
+    audiences:
+    - appthrust-platform-api
+    bearerPassThrough: true
+    scopes:
+    - openid
+    - profile
+    - email
+    tokenClaims:
+    - groups
+  components:
+  - defaultValues:
+      credentialSlots:
+      - description: Internal integration secret (ntn_…) used to read the pages shared
+          with the integration.
+        displayName: Notion integration token
+        env: KNOWLEDGE_NOTION_TOKEN
+        name: notion
+        provider: Notion
+      - description: 'Personal access token with read scope covering every esa team
+          to import (PAT v2: select the teams; PAT v1: all your teams). Each source
+          picks one team.'
+        displayName: esa access token
+        env: KNOWLEDGE_ESA_TOKEN
+        name: esa
+        provider: Esa
+      internalService: true
+      livenessProbePath: /healthz
+      minScale: 1
+      port: 8080
+      publicURLEnv: KNOWLEDGE_PUBLIC_URL
+      readinessProbePath: /readyz
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi
+    definitionRef:
+      name: web-service
+      version: v1
+    id: web
+  - defaultValues:
+      extensions:
+      - vector
+      provider: CNPG
+      storageSize: 2Gi
+    definitionRef:
+      name: postgresql
+      version: v1
+    id: database
+  connections:
+  - from: web
+    name: database
+    to: database
+  dependencies:
+  - definition: embedding
+    installPolicy: Automatic
+    urlEnv: KNOWLEDGE_EMBEDDING_URL
+  - definition: ai-gateway
+    installPolicy: Automatic
+    urlEnv: KNOWLEDGE_LLM_URL
+  display:
+    category: assist
+    description: Search and ask across Notion, esa and your own documents.
+    iconRef:
+      name: knowledge
+    title: Knowledge
+  health:
+    capabilities:
+    - name: search
+      required: true
+    - name: ask
+    - name: ingest
+      required: true
+  publish:
+    hostnameLabel: knowledge
+  releaseIdentityEnvPrefix: KNOWLEDGE
+  updatePolicy:
+    allowed:
+    - pinned
+    - follow
+    default: pinned
+  versions:
+  - default: true
+    images:
+      web: ghcr.io/appthrust/platform/knowledge@sha256:96dfd1a719ad9c376018608ed768cabe265c4424168ad2a2b667147e81a3092a
+    name: 0.1.0
+    served: true
+    stream: "0.1"

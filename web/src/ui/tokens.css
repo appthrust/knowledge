@@ -1,0 +1,20 @@
+:root {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-canvas: oklch(0.985 0.001 106);
+  --color-surface: oklch(1 0 0);
+  --color-ink: oklch(0.268 0.007 34);
+  --color-muted: oklch(0.47 0.01 58);
+  --color-line: oklch(0.88 0.006 56);
+  --color-accent: oklch(0.44 0.12 195);
+  --color-accent-soft: oklch(0.96 0.03 195);
+  --color-bad: oklch(0.45 0.16 27);
+  --color-bad-soft: oklch(0.97 0.02 20);
+  --color-good: oklch(0.42 0.11 150);
+  --color-good-soft: oklch(0.96 0.03 150);
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --radius: 6px;
+}

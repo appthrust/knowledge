@@ -26,69 +26,69 @@ locales:
 
       ドキュメントと埋め込みはプロジェクト内のデータベースに保存され、サインインには組織のアカウントを使います。Notionやesaのトークンは書き込み専用で、プロジェクトのアプリ設定でまとめて管理することもできます。ほかのアプリやスクリプトからは、アクセスキーで検索と回答を呼び出せます。
 highlights:
-  - screenshot: ask
-    locales:
-      en:
-        title: Answers that show their sources
-        body: Ask in your own words. The passages the answer draws on are listed first, with links to the original Notion page, esa post or document, and the answer follows.
-      ja:
-        title: 出典が分かる回答
-        body: 普段の言葉で質問できます。回答の根拠になった箇所が先に並び、元のNotionページやesaの記事、ドキュメントを開いて確かめられます。
-  - screenshot: search
-    locales:
-      en:
-        title: See exactly what matched
-        body: Results show the matching passage and its score. Switch between hybrid, full-text and vector search, filter by collection, and let the LLM add official terms and rephrasings to the query.
-      ja:
-        title: 一致した箇所をそのまま確認
-        body: 検索結果には一致した本文とスコアが表示されます。ハイブリッド・全文検索・ベクトル検索の切り替えやコレクションでの絞り込みに加え、LLMで正式な用語や言い換えを補えます。
-  - screenshot: sources
-    locales:
-      en:
-        title: Keep Notion and esa in sync
-        body: Add a Notion integration or an esa team as a source and sync it in the background. Each source shows the last run's counts and errors, and pages removed at the source drop out of the index.
-      ja:
-        title: Notionとesaを同期
-        body: Notionのインテグレーションやesaのチームをソースとして追加し、バックグラウンドで同期します。前回の同期の件数とエラーが表示され、元から消えたページは索引からも外れます。
-  - screenshot: documents
-    locales:
-      en:
-        title: Add your own Markdown
-        body: Paste a Markdown document with a title and an optional source URL. It is split into chunks and embedded before it is saved, so it is searchable straight away.
-      ja:
-        title: Markdownを直接追加
-        body: タイトルと出典URLを付けてMarkdownを貼り付けます。チャンク分割と埋め込みが済んでから保存されるので、すぐに検索できます。
-  - screenshot: collections
-    locales:
-      en:
-        title: Decide who can find what
-        body: Collections group documents and name the groups that can search them. Leave the groups empty to share a collection with everyone in the Project.
-      ja:
-        title: 公開範囲はコレクションで管理
-        body: ドキュメントをコレクションにまとめ、検索できるグループを指定します。グループを空欄にすると、プロジェクトの全員が検索できます。
+- screenshot: ask
+  locales:
+    en:
+      title: Answers that show their sources
+      body: Ask in your own words. The passages the answer draws on are listed first, with links to the original Notion page, esa post or document, and the answer follows.
+    ja:
+      title: 出典が分かる回答
+      body: 普段の言葉で質問できます。回答の根拠になった箇所が先に並び、元のNotionページやesaの記事、ドキュメントを開いて確かめられます。
+- screenshot: search
+  locales:
+    en:
+      title: See exactly what matched
+      body: Results show the matching passage and its score. Switch between hybrid, full-text and vector search, filter by collection, and let the LLM add official terms and rephrasings to the query.
+    ja:
+      title: 一致した箇所をそのまま確認
+      body: 検索結果には一致した本文とスコアが表示されます。ハイブリッド・全文検索・ベクトル検索の切り替えやコレクションでの絞り込みに加え、LLMで正式な用語や言い換えを補えます。
+- screenshot: sources
+  locales:
+    en:
+      title: Keep Notion and esa in sync
+      body: Add a Notion integration or an esa team as a source and sync it in the background. Each source shows the last run's counts and errors, and pages removed at the source drop out of the index.
+    ja:
+      title: Notionとesaを同期
+      body: Notionのインテグレーションやesaのチームをソースとして追加し、バックグラウンドで同期します。前回の同期の件数とエラーが表示され、元から消えたページは索引からも外れます。
+- screenshot: documents
+  locales:
+    en:
+      title: Add your own Markdown
+      body: Paste a Markdown document with a title and an optional source URL. It is split into chunks and embedded before it is saved, so it is searchable straight away.
+    ja:
+      title: Markdownを直接追加
+      body: タイトルと出典URLを付けてMarkdownを貼り付けます。チャンク分割と埋め込みが済んでから保存されるので、すぐに検索できます。
+- screenshot: collections
+  locales:
+    en:
+      title: Decide who can find what
+      body: Collections group documents and name the groups that can search them. Leave the groups empty to share a collection with everyone in the Project.
+    ja:
+      title: 公開範囲はコレクションで管理
+      body: ドキュメントをコレクションにまとめ、検索できるグループを指定します。グループを空欄にすると、プロジェクトの全員が検索できます。
 screenshots:
-  - name: search
-    file: search.webp
-    alt:
-      en: "Knowledge search playground in Japanese: the query 年次有給休暇 申請 limited to the handbook collection with LLM query expansion on, five hybrid hits, the extra terms 年次有給休暇 and 休暇申請, and the top hit 休暇・休業の取り扱い with its score and text."
-      ja: "Knowledgeの検索プレイグラウンド。handbookコレクションに絞り、LLMでクエリを補う設定で「年次有給休暇 申請」を検索した結果。ハイブリッドで5件、あわせて検索した語句「年次有給休暇」「休暇申請」、1位の「休暇・休業の取り扱い」のスコアと本文が表示されています。"
-  - name: ask
-    file: ask.webp
-    alt:
-      en: "Ask section below the search form: the question 年次有給休暇 申請 filtered to the handbook collection, and the first citation 休暇・休業の取り扱い with its score and the cited passage about requesting paid leave."
-      ja: "検索フォームの下にある「質問する」。handbookコレクションに絞った「年次有給休暇 申請」の質問と、1件目の出典「休暇・休業の取り扱い」のスコアと、有給休暇の申請について書かれた引用箇所が表示されています。"
-  - name: sources
-    file: sources.webp
-    alt:
-      en: "Sources page: a Notion source with root page and database IDs and an esa source for the team hoshizora with the query in:Engineering, each with its last sync counts and no sync errors, beside the Add source form set to Notion."
-      ja: "ソース画面。ルートページIDとデータベースIDを指定したNotionのソースと、検索クエリ「in:Engineering」を指定したesaチーム「hoshizora」のソース。それぞれ前回の同期の件数と「同期エラーなし」が表示され、右にNotionを選んだ「ソースを追加」フォームがあります。"
-  - name: documents
-    file: documents.webp
-    alt:
-      en: "Documents page for the handbook collection: five Markdown documents such as 休暇・休業の取り扱い and 在宅勤務規程, each with its chunk count and source URL, beside the Add document form with title, source URL and Markdown fields."
-      ja: "handbookコレクションのドキュメント画面。「休暇・休業の取り扱い」「在宅勤務規程」など5件のMarkdownドキュメントがチャンク数と出典URL付きで並び、右にタイトル・出典URL・Markdown本文を入力する「ドキュメントを追加」フォームがあります。"
-  - name: collections
-    file: collections.webp
-    alt:
-      en: "Collections page: handbook visible to everyone in the Project, engineering visible to the engineering and sre groups, and sales visible to the sales and customer-success groups, beside the Create collection form."
-      ja: "コレクション画面。プロジェクト全員に公開されたhandbook、engineeringとsreグループに公開されたengineering、salesとcustomer-successグループに公開されたsalesが並び、右に「コレクションを作成」フォームがあります。"
+- name: search
+  file: search.webp
+  alt:
+    en: 'Knowledge search playground in Japanese: the query 年次有給休暇 申請 limited to the handbook collection with LLM query expansion on, five hybrid hits, the extra terms 年次有給休暇 and 休暇申請, and the top hit 休暇・休業の取り扱い with its score and text.'
+    ja: 検索画面。handbook コレクションに絞って「年次有給休暇 申請」を検索し、ハイブリッド検索で 5 件がヒット。補った検索語と、1 位の文書のスコアと本文が表示されています。
+- name: ask
+  file: ask.webp
+  alt:
+    en: 'Ask section below the search form: the question 年次有給休暇 申請 filtered to the handbook collection, and the first citation 休暇・休業の取り扱い with its score and the cited passage about requesting paid leave.'
+    ja: 検索フォームの下にある「質問する」。handbookコレクションに絞った「年次有給休暇 申請」の質問と、1件目の出典「休暇・休業の取り扱い」のスコアと、有給休暇の申請について書かれた引用箇所が表示されています。
+- name: sources
+  file: sources.webp
+  alt:
+    en: 'Sources page: a Notion source with root page and database IDs and an esa source for the team hoshizora with the query in:Engineering, each with its last sync counts and no sync errors, beside the Add source form set to Notion.'
+    ja: ソース画面。Notion のソースと esa のソースが、前回の同期件数と「同期エラーなし」つきで並び、右に「ソースを追加」フォームがあります。
+- name: documents
+  file: documents.webp
+  alt:
+    en: 'Documents page for the handbook collection: five Markdown documents such as 休暇・休業の取り扱い and 在宅勤務規程, each with its chunk count and source URL, beside the Add document form with title, source URL and Markdown fields.'
+    ja: handbook コレクションのドキュメント一覧。5 件の Markdown 文書がチャンク数と出典 URL つきで並び、右に「ドキュメントを追加」フォームがあります。
+- name: collections
+  file: collections.webp
+  alt:
+    en: 'Collections page: handbook visible to everyone in the Project, engineering visible to the engineering and sre groups, and sales visible to the sales and customer-success groups, beside the Create collection form.'
+    ja: コレクション画面。プロジェクト全員に公開されたhandbook、engineeringとsreグループに公開されたengineering、salesとcustomer-successグループに公開されたsalesが並び、右に「コレクションを作成」フォームがあります。

@@ -1,7 +1,7 @@
 github.com/DATA-DOG/go-sqlmock v1.5.2 h1:OcvFkGmslmlZibjAjaHm3L//6LiuBgolP7OputlJIzU=
 github.com/DATA-DOG/go-sqlmock v1.5.2/go.mod h1:88MAG/4G7SMwSE3CeA0ZKzrT5CiOU3OJ+JlNzwDqpNU=
-github.com/appthrust/appserver-go v0.2.0 h1:TLb4pzbTXy3uMER5vQAXdzeeOTLxuNYEUXXvTAVzWm8=
-github.com/appthrust/appserver-go v0.2.0/go.mod h1:0KSf9RQZ6OxBcE0lxYzzjKF37nfwbKps3wXUGlE0oFo=
+github.com/appthrust/appserver-go v0.3.0 h1:zxOz0hkspZSXjLq3KWGDLkZIz42Jag6wqRujZ8lTru0=
+github.com/appthrust/appserver-go v0.3.0/go.mod h1:0KSf9RQZ6OxBcE0lxYzzjKF37nfwbKps3wXUGlE0oFo=
 github.com/coreos/go-oidc/v3 v3.20.0 h1:EtE0WIBHk03N+DqGkY4+UONzzZHk7amKt6IyNd7OsZE=
 github.com/coreos/go-oidc/v3 v3.20.0/go.mod h1:DYCf24+ncYi+XkIH97GY1+dqoRlbaSI26KVTCI9SrY4=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=

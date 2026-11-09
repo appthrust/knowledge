@@ -29,11 +29,8 @@ func fixture(t *testing.T) (*store.Store, Options, *identity.Authenticator, *pla
 	}))
 	auth, assertion := assertionIdentity(t)
 	platform := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/api/v1/projects/pj-test" {
-			_, _ = w.Write([]byte(`{"teamSlug":"team"}`))
-		} else {
-			_, _ = w.Write([]byte(`{"items":[{"id":"id","slug":"team","role":"Admin"}]}`))
-		}
+		require.Equal(t, "/api/v1/projects/pj-test/access", r.URL.Path)
+		_, _ = w.Write([]byte(`{"member":true,"role":"Admin"}`))
 	}))
 	t.Cleanup(platform.Close)
 	return db, Options{ProjectID: "pj-test", Embedding: e}, auth, platformclient.New(platform.URL, "pj-test"), assertion("pj-test", "search", "documents:read", "documents:write")
@@ -56,11 +53,8 @@ func TestRouteDeadlines(t *testing.T) {
 	auth, err := identity.New(identity.Trust{})
 	require.NoError(t, err)
 	upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/api/v1/projects/pj-test" {
-			_, _ = w.Write([]byte(`{"teamSlug":"team"}`))
-		} else {
-			_, _ = w.Write([]byte(`{"items":[{"id":"id","slug":"team","role":"Admin"}]}`))
-		}
+		require.Equal(t, "/api/v1/projects/pj-test/access", r.URL.Path)
+		_, _ = w.Write([]byte(`{"member":true,"role":"Admin"}`))
 	}))
 	defer upstream.Close()
 	platform := platformclient.New(upstream.URL, "pj-test")

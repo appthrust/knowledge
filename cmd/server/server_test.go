@@ -344,14 +344,8 @@ func TestOpenAPIContractAuthenticatesMembersAndKeys(t *testing.T) {
 			upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				require.Equal(t, member, r.Header.Get("Authorization"))
 				switch r.URL.Path {
-				case "/api/v1/projects/pj-test":
-					_, _ = w.Write([]byte(`{"teamSlug":"team"}`))
-				case "/api/v1/teams":
-					if tc.role == "" {
-						_, _ = w.Write([]byte(`{"items":[]}`))
-					} else {
-						_, _ = fmt.Fprintf(w, `{"items":[{"id":"team-id","slug":"team","role":%q}]}`, tc.role)
-					}
+				case "/api/v1/projects/pj-test/access":
+					_, _ = fmt.Fprintf(w, `{"member":%t,"role":%q}`, tc.role != "", tc.role)
 				default:
 					http.NotFound(w, r)
 				}

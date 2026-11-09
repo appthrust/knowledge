@@ -60,7 +60,7 @@ func (a *API) authenticate(r *http.Request, management, mutation bool) (domain.S
 	}
 	// Job reads retain their existing editor/admin requirement for users.
 	needsWrite := management || mutation || strings.HasPrefix(r.URL.Path, "/api/knowledge/v1/jobs/")
-	if access.NotMember || access.TeamID == "" || (needsWrite && !access.CanCreateApps) {
+	if access.NotMember || (needsWrite && !access.CanCreateApps) {
 		return domain.Scope{}, httpx.Forbidden()
 	}
 	return domain.Scope{Admin: access.IsConsoleAdmin, Groups: principal.Groups}, nil

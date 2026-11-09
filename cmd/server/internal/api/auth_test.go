@@ -106,10 +106,8 @@ func TestOIDCRolesAndGroups(t *testing.T) {
 		t.Run(role, func(t *testing.T) {
 			upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				switch r.URL.Path {
-				case "/api/v1/projects/pj-test":
-					_, _ = w.Write([]byte(`{"teamSlug":"team"}`))
-				case "/api/v1/teams":
-					_, _ = w.Write([]byte(`{"items":[{"id":"team-id","slug":"team","role":"` + role + `"}]}`))
+				case "/api/v1/projects/pj-test/access":
+					_, _ = w.Write([]byte(`{"projectId":"pj-test","member":true,"role":"` + role + `","platformRoles":[]}`))
 				default:
 					http.NotFound(w, r)
 				}

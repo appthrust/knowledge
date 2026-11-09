@@ -125,7 +125,7 @@ without `done` is an error, not a successful partial answer.
 ## Server and image
 
 The server and all of its internal packages live in `cmd/server/`. It requires
-`github.com/appthrust/appserver-go v0.2.0` without a replacement or platform
+`github.com/appthrust/appserver-go v0.3.0` without a replacement or platform
 checkout. PostgreSQL with pgvector stores Knowledge data; configure
 `KNOWLEDGE_DATABASE_URL` (or `DATABASE_URL`) and the `PLATFORM_*` identity and API
 settings before running a real integration. `KNOWLEDGE_EMBEDDING_URL` and
@@ -156,6 +156,9 @@ NODE_AUTH_TOKEN="$(gh auth token)" docker build --platform linux/amd64 \
 ```
 
 ## Release
+
+Next release: **`v0.3.0`**. User authorization uses effective Project IAM
+membership and roles from the Project access probe.
 
 Once the bootstrap prerequisites below are complete, create and push a new
 SemVer tag, starting with `v0.2.0` (the existing catalog floor owns `0.1.0`):

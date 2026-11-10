@@ -30,7 +30,7 @@ func fixture(t *testing.T) (*store.Store, Options, *identity.Authenticator, *pla
 	auth, assertion := assertionIdentity(t)
 	platform := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, "/api/v1/projects/pj-test/access", r.URL.Path)
-		_, _ = w.Write([]byte(`{"member":true,"role":"Admin"}`))
+		_, _ = w.Write([]byte(`{"member":true,"roles":["Admin"],"actions":[]}`))
 	}))
 	t.Cleanup(platform.Close)
 	return db, Options{ProjectID: "pj-test", Embedding: e}, auth, platformclient.New(platform.URL, "pj-test"), assertion("pj-test", "search", "documents:read", "documents:write")
@@ -54,7 +54,7 @@ func TestRouteDeadlines(t *testing.T) {
 	require.NoError(t, err)
 	upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, "/api/v1/projects/pj-test/access", r.URL.Path)
-		_, _ = w.Write([]byte(`{"member":true,"role":"Admin"}`))
+		_, _ = w.Write([]byte(`{"member":true,"roles":["Admin"],"actions":[]}`))
 	}))
 	defer upstream.Close()
 	platform := platformclient.New(upstream.URL, "pj-test")

@@ -12,6 +12,7 @@ import (
 	"github.com/appthrust/appserver-go/appserver/platformclient"
 	"github.com/appthrust/appserver-go/appserver/platformenv"
 	"github.com/appthrust/appserver-go/appserver/releaseidentity"
+	"github.com/appthrust/appserver-go/appserver/requestlog"
 	"github.com/appthrust/knowledge/cmd/server/internal/api"
 	"github.com/appthrust/knowledge/cmd/server/internal/domain"
 	"net/http"
@@ -76,7 +77,8 @@ func newHandler(staticDir, upstreamURL, projectID string, knowledge http.Handler
 		})
 	})
 	mux.Handle("GET /launcher", launcher.NewHandler(catalog, authenticator.Authenticate))
-	mux.Handle("GET /releasez", releaseidentity.NewHandler("KNOWLEDGE", func(w http.ResponseWriter, _ *http.Request) {
+	mux.Handle("GET /releasez", releaseidentity.NewHandler("KNOWLEDGE", func(w http.ResponseWriter, r *http.Request) {
+		requestlog.SetOutcome(r, "unavailable", "release_identity_unavailable")
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		w.WriteHeader(http.StatusServiceUnavailable)
 		_, _ = w.Write([]byte("UI release status unavailable\n"))

@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/appthrust/appserver-go/appserver/httpx"
+	"github.com/appthrust/appserver-go/appserver/requestlog"
 	"github.com/appthrust/knowledge/cmd/server/internal/domain"
 	"github.com/appthrust/knowledge/cmd/server/internal/store"
 	"net/http"
@@ -221,14 +222,18 @@ func (a *API) answer(s *request) (any, error) {
 	}
 	for _, hit := range hits {
 		if err := emit("citation", hit); err != nil {
+			requestlog.SetOutcome(s.r, "stream_failed", "sse_write_failed")
 			return streamed{failed: true}, nil
 		}
 	}
 	err = domain.StreamTokens(response, func(text string) error { return emit("token", map[string]string{"text": text}) })
 	if err != nil {
+		requestlog.SetOutcome(s.r, "stream_failed", "answer_stream_interrupted")
 		_ = emit("error", map[string]string{"error": "knowledge_llm_error", "message": "The LLM stream did not complete"})
 		return streamed{failed: true}, nil
 	}
-	_ = emit("done", struct{}{})
+	if err := emit("done", struct{}{}); err != nil {
+		requestlog.SetOutcome(s.r, "stream_failed", "sse_write_failed")
+	}
 	return streamed{}, nil
 }

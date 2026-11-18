@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -76,6 +77,35 @@ func TestUnavailableStoreProbesSPAAndConfig(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/assets/missing.js", nil))
 	require.Equal(t, 404, w.Code)
 }
+
+func TestServerLogsReleaseUnavailable(t *testing.T) {
+	cleanEnv(t)
+	t.Setenv("KNOWLEDGE_RELEASE_VERSION", "")
+	t.Setenv("KNOWLEDGE_SOURCE_REVISION", "")
+	t.Setenv("KNOWLEDGE_ARTIFACT_DIGEST", "")
+	handler, err := newHandler(t.TempDir(), "http://127.0.0.1:1", "pj-test", nil, nil)
+	require.NoError(t, err)
+
+	var output bytes.Buffer
+	server := newHTTPServer(":8080", handler, &output)
+	w := httptest.NewRecorder()
+	server.Handler.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/releasez?private=value", nil))
+	require.Equal(t, http.StatusServiceUnavailable, w.Code)
+	require.Equal(t, "UI release status unavailable\n", w.Body.String())
+	require.Equal(t, 1, bytes.Count(output.Bytes(), []byte{'\n'}))
+	var entry struct {
+		Service, Path, Outcome, Reason string
+		Status                         int
+	}
+	require.NoError(t, json.Unmarshal(output.Bytes(), &entry))
+	require.Equal(t, "knowledge", entry.Service)
+	require.Equal(t, "/releasez", entry.Path)
+	require.Equal(t, w.Code, entry.Status)
+	require.Equal(t, "unavailable", entry.Outcome)
+	require.Equal(t, "release_identity_unavailable", entry.Reason)
+	require.NotContains(t, output.String(), "private=value")
+}
+
 func TestInvalidConfigBeforeDatabase(t *testing.T) {
 	cleanEnv(t)
 	for _, tc := range []struct{ upstream, project string }{{"http://remote.test", "pj-test"}, {"https://valid.test", "UPPER"}, {"https://valid.test/path", "pj-test"}, {"https://valid.test", ""}} {

@@ -4,6 +4,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/appthrust/appserver-go/appserver/requestlog"
 	"github.com/appthrust/knowledge/cmd/server/internal/domain"
 )
 
@@ -35,17 +36,19 @@ func (a *API) esaConnection(s *request) (any, error) {
 	c := &a.esa
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if c.token == token && a.now().Before(c.expires) {
-		return c.value, nil
+	if c.token != token || !a.now().Before(c.expires) {
+		value := EsaConnection{PlatformManaged: true, Teams: []domain.EsaTeam{}}
+		teams, err := a.options.Esa.Teams(s.r.Context(), token)
+		if err != nil {
+			value.Error = err.Error()
+		} else {
+			value.Connected = true
+			value.Teams = teams
+		}
+		c.token, c.value, c.expires = token, value, a.now().Add(esaConnectionTTL)
 	}
-	value := EsaConnection{PlatformManaged: true, Teams: []domain.EsaTeam{}}
-	teams, err := a.options.Esa.Teams(s.r.Context(), token)
-	if err != nil {
-		value.Error = err.Error()
-	} else {
-		value.Connected = true
-		value.Teams = teams
+	if c.value.Error != "" {
+		requestlog.SetOutcome(s.r, "provider_failed", "esa_connection_failed")
 	}
-	c.token, c.value, c.expires = token, value, a.now().Add(esaConnectionTTL)
-	return value, nil
+	return c.value, nil
 }
